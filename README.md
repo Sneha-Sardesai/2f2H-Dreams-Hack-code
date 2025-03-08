@@ -1310,3 +1310,50 @@ for i in X:
   else:
    print("incorrect,the corect answer is",i)
 
+# Wix final 3
+
+let questions = [
+    "#LPQ1", "#LPQ2", "#LPQ3", 
+    "#LCQ1", "#LCQ2", "#LCQ3", 
+    "#LMQ1", "#LMQ2", "#LMQ3"
+];
+
+// Function to show the current question and hide the others
+function showQuestion(QNum) {
+    for (let i = 0; i < questions.length; i++) {
+        let questionSelector = `#PQ${i + 1}`;
+        let optionsSelector = `#PQ${i + 1}Option1, #PQ${i + 1}Option2, #PQ${i + 1}Option3, #PQ${i + 1}Option4`;
+        
+        if (i === QNum) {
+            toggleQuestion([questionSelector, optionsSelector], true);
+        } else {
+            toggleQuestion([questionSelector, optionsSelector], false);
+        }
+    }
+}
+
+// Function to toggle question visibility
+function toggleQuestion(elements, show) {
+    elements.forEach(id => {
+        if (show) {
+            $w(id).expand();
+        } else {
+            $w(id).collapse();
+        }
+    });
+}
+
+// Next Button Click - Show next question
+$w("#LNext").onClick(() => {
+    let currentIndex = questions.indexOf($w("#LNext").currentQuestion);
+    let nextIndex = (currentIndex + 1) % questions.length;
+    showQuestion(nextIndex);
+});
+
+// Previous Button Click - Show previous question
+$w("#LPrevious").onClick(() => {
+    let currentIndex = questions.indexOf($w("#LPrevious").currentQuestion);
+    let prevIndex = (currentIndex - 1 + questions.length) % questions.length;
+    showQuestion(prevIndex);
+});
+
