@@ -147,3 +147,83 @@ function sendAnswersToBackend() {
         console.error('Error:', error);
     });
 });
+
+#slight changes
+
+let currentBoxIndex = 0;
+const sections = [
+    "#LPQ1", "#LPQ2", "#LPQ3", "#LPQ4", "#LPQ5", 
+    "#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5",
+    "#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"
+];
+
+// Array to store answers
+let userAnswers = [];
+
+// Function to collect answers
+function collectAnswers() {
+    const currentSection = $w(sections[currentBoxIndex]);
+
+    // Assuming each section has a question with multiple choice or text input
+    const answer = currentSection.querySelector('input[type="radio"]:checked')?.value || // For radio buttons
+                   currentSection.querySelector('input[type="checkbox"]:checked')?.value || // For checkboxes
+                   currentSection.querySelector('input[type="text"]').value; // For text inputs
+
+    // Store the answer
+    userAnswers[currentBoxIndex] = answer;
+}
+
+$w.onReady(function () {
+    // Hide all sections except the first one
+    sections.forEach((id, index) => {
+        if (index !== 0) $w(id).hide();
+    });
+
+    // Button click function to move to the next section
+    $w("#LNext").onClick(() => {
+        collectAnswers(); // Collect the answer before moving to the next section
+
+        if (currentBoxIndex < sections.length - 1) {
+            $w(sections[currentBoxIndex]).hide(); // Hide current section
+            currentBoxIndex++;
+            $w(sections[currentBoxIndex]).show(); // Show next section
+        }
+
+        // Send answers to backend after each question or at the end
+        sendAnswersToBackend();
+    });
+
+    // Button click function to go back to the previous section
+    $w("#LPrevious").onClick(() => {
+        collectAnswers(); // Collect the answer before going back
+
+        if (currentBoxIndex > 0) {
+            $w(sections[currentBoxIndex]).hide(); // Hide current section
+            currentBoxIndex--;
+            $w(sections[currentBoxIndex]).show(); // Show previous section
+        }
+    });
+});
+
+// Function to fetch the link and send answers to the backend (Python)
+function sendAnswersToBackend() {
+    // Fetch the Python server link
+    fetch("https://0f59-34-80-29-194.ngrok-free.app/calculate", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            answers: userAnswers // Send the collected answers as JSON
+        })
+    })
+    .then(response => response.json())  // Assuming your Python backend returns JSON
+    .then(data => {
+        console.log('Success:', data); // Log the response from the backend
+        // Optionally, you could process this data (e.g., show results or redirect)
+    })
+    .catch((error) => {
+        console.error('Error:', error); // Log any errors in the fetch request
+    });
+}
+
