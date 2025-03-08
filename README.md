@@ -252,7 +252,8 @@ $w.onReady(function ()
 	});
 });
 
-#wix changes new
+#wix changes -- toggle questions
+
 $w.onReady(function () {
     // Show Question 1, Hide Question 2 at Start
     showQuestion(1);
@@ -287,3 +288,71 @@ $w.onReady(function () {
         });
     }
 });
+
+# wix changes save user input 
+
+let currentBoxIndex = 0; const boxes = [ 
+	"#LPQ1", "#LPQ2", "LPQ3", "LPQ4", "LPQ5", 
+	"#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5", 
+	"#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"];
+
+let studentAnswers = [];
+
+function collectAnswers() {
+    const currentPage = $w(boxes[currentPageIndex]);
+
+const answer = currentPage.querySelector('input[type="radio"]:checked')?.value || 
+// So we're storing the answer
+userAnswers[currentPageIndex] = answer;
+
+// Next Button Click - Show Question 2, Hide Question 1
+$w("#LNext").onClick(() => {
+    showQuestion(2);
+});
+
+// Previous Button Click - Show Question 1, Hide Question 2
+$w("#LPrevious").onClick(() => {
+    showQuestion(1);
+});
+
+function showQuestion(questionNumber) {
+    if (questionNumber === 1) {
+        toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], true);
+        toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+    } else if (questionNumber === 2) {
+        toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], true);
+    }
+}
+
+function toggleQuestion(elements, show) {
+    elements.forEach(id => {
+        if (show) {
+            $w(id).expand();
+        } else {
+            $w(id).collapse();
+        }
+    });
+}
+});
+
+
+function sendAnswersToBackend() {
+    fetch("https://0f59-34-80-29-194.ngrok-free.app/main_code", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            answers: userAnswers 
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
