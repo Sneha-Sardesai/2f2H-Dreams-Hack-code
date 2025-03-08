@@ -82,3 +82,68 @@ $w.onReady(function () {
             method : 'POST',
 
 });
+
+# wix code changes 2
+
+
+let currentBoxIndex = 0; const boxes = [ 
+	"#LPQ1", "#LPQ2", "LPQ3", "LPQ4", "LPQ5", 
+	"#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5", 
+	"#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"];
+
+let studentAnswers = [];
+
+function collectAnswers() {
+    const currentPage = $w(boxes[currentPageIndex]);
+
+const answer = currentPage.querySelector('input[type="radio"]:checked')?.value || 
+// So we're storing the answer
+userAnswers[currentPageIndex] = answer;
+
+$w.onReady(function () 
+{ 
+	// Hide all pages except the first one ]
+	pages.forEach((id, index) => 
+	{ 
+		if (index !== 0) $w(id).collapse(); });
+		// to move to the next question
+		$w("#LNext").onClick(() => 
+		{
+			collectAnswers(); 
+		if (currentPageIndex < pages.length - 1) 
+		{
+        	$w(boxes[currentPageIndex]).hide(); // Hide current page
+        	currentPageIndex++;
+        	$w(boxes[currentPageIndex]).show(); // Show next page
+    		}
+	});
+
+	$w("#LPrevious").onClick(() => 
+	{
+		collectAnswers(); 
+		if (currentPageIndex < pages.length - 1) {
+        $w(boxes[currentPageIndex]).hide(); // Hide current page uk
+        currentPageIndex--;
+        $w(boxes[currentPageIndex]).show(); // Show next page (or next question)
+    }
+});
+
+
+function sendAnswersToBackend() {
+    fetch("https://0f59-34-80-29-194.ngrok-free.app/main_code", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            answers: userAnswers 
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
