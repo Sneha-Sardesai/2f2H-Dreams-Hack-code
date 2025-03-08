@@ -46,3 +46,39 @@ $w.onReady(function () {
         }
     });
 });
+
+# wix code changes
+
+let currentBoxIndex = 0;
+const boxes = [
+	"#LPQ1", "#LPQ2", "LPQ3", "LPQ4", "LPQ5", 
+	"#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5",
+	"#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"];
+
+$w.onReady(function () {
+    // Hide all boxes except the first one
+    boxes.forEach((id, index) => {
+        if (index !== 0) $w(id).collapse();
+    });
+
+    // Button click function to move to the next question
+    $w("#LNext").onClick(() => {
+        if (currentBoxIndex < boxes.length - 1) {
+            $w(boxes[currentBoxIndex]).collapse(); // Hide current box
+            currentBoxIndex++;
+            $w(boxes[currentBoxIndex]).expand(); // Show next box
+        }
+    });
+
+	$w("#LPrevious").onClick(() => {
+        if (currentBoxIndex < boxes.length - 1) {
+            $w(boxes[currentBoxIndex]).collapse(); // Hide current box
+            currentBoxIndex--;
+            $w(boxes[currentBoxIndex]).expand(); // Show next box
+        }
+    });
+
+    fetch("https://0f59-34-80-29-194.ngrok-free.app/calculate",{
+            method : 'POST',
+
+});
