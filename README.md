@@ -251,3 +251,39 @@ $w.onReady(function ()
 		$w("#PQ1, #PQ2Option1, "#PQ2Option2", "#PQ2Option3", "#PQ2Option4").collapse();
 	});
 });
+
+#wix changes new
+$w.onReady(function () {
+    // Show Question 1, Hide Question 2 at Start
+    showQuestion(1);
+
+    // Next Button Click - Show Question 2, Hide Question 1
+    $w("#LNext").onClick(() => {
+        showQuestion(2);
+    });
+
+    // Previous Button Click - Show Question 1, Hide Question 2
+    $w("#LPrevious").onClick(() => {
+        showQuestion(1);
+    });
+
+    function showQuestion(questionNumber) {
+        if (questionNumber === 1) {
+            toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], true);
+            toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+        } else if (questionNumber === 2) {
+            toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+            toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], true);
+        }
+    }
+
+    function toggleQuestion(elements, show) {
+        elements.forEach(id => {
+            if (show) {
+                $w(id).expand();
+            } else {
+                $w(id).collapse();
+            }
+        });
+    }
+});
