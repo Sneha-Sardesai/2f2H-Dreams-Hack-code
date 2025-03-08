@@ -227,3 +227,27 @@ function sendAnswersToBackend() {
     });
 }
 
+# wix changes
+
+$w.onReady(function () 
+{
+	// Show Question 1 Elements
+	$w("#PQ1, #PQ1Option1, "#PQ1Option2", "#PQ1Option3", "#PQ1Option4").expand();
+	$w("#PQ1, #PQ2Option1, "#PQ2Option2", "#PQ2Option3", "#PQ2Option4").collapse();
+	
+	// Next Button Function
+	$w("#LNext").onClick(() => 
+	{
+		// Hide Question 2
+		$w("#PQ1, #PQ1Option1, "#PQ1Option2", "#PQ1Option3", "#PQ1Option4").collapse();
+		$w("#PQ1, #PQ2Option1, "#PQ2Option2", "#PQ2Option3", "#PQ2Option4").expand();
+	});
+	
+	// Previous Button Function
+	$w("#Previous").onClick(() => 
+	{
+		// Hide Question 1
+		$w("#PQ1, #PQ1Option1, "#PQ1Option2", "#PQ1Option3", "#PQ1Option4").expand();
+		$w("#PQ1, #PQ2Option1, "#PQ2Option2", "#PQ2Option3", "#PQ2Option4").collapse();
+	});
+});
