@@ -356,3 +356,27 @@ function sendAnswersToBackend() {
     });
 });
 
+# Backend python code
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from pyngrok import ngrok
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/main_code', methods = ['POST'])
+def main_code() :
+	data = request.get('answers')
+	student_answers = data.get('answers')
+	values = [[answer] for answer in student_answers]
+	body = {'values': values}
+	
+    
+public_url = ngrok.connect(5000)
+print(f"Public URL : {public_url}")
+
+app.run(port=5000)
+
+
+
