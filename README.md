@@ -378,5 +378,83 @@ print(f"Public URL : {public_url}")
 
 app.run(port=5000)
 
+# Including all questions in Wix
+
+// Next Button Click - Show Question 2, Hide Question 1
+$w("#LNext").onClick(() => {
+	showQuestion(2);
+$w("#LNext").onClick(() => {
+	showQuestion(3);
+$w("#LNext").onClick(() => {
+	showQuestion(4);
+$w("#LNext").onClick(() => {
+	showQuestion(5);
+$w("#LNext").onClick(() => {
+	showQuestion(6);
+$w("#LNext").onClick(() => {
+	showQuestion(7);
+$w("#LNext").onClick(() => {
+	showQuestion(8);
+$w("#LNext").onClick(() => {
+	showQuestion(9);
+$w("#LNext").onClick(() => {
+	showQuestion(1);
+
+});
+
+// Previous Button Click - Show Question 1, Hide Question 2
+$w("#LPrevious").onClick(() => {
+    showQuestion(8);
+$w("#LNext").onClick(() => {
+	showQuestion(2);
+$w("#LNext").onClick(() => {
+	showQuestion(3);
+$w("#LNext").onClick(() => {
+	showQuestion(4);
+$w("#LNext").onClick(() => {
+	showQuestion(5);
+$w("#LNext").onClick(() => {
+	showQuestion(6);
+$w("#LNext").onClick(() => {
+	showQuestion(7);
+$w("#LNext").onClick(() => {
+	showQuestion(8);
+$w("#LNext").onClick(() => {
+	showQuestion(9);
+$w("#LNext").onClick(() => {
+	showQuestion(1);
+
+});
+
+function showQuestion(QNum) 
+{
+   	if (QNum === 1) 
+	{
+        	toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], true);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+	} 
+	else if (QNum === 2) 
+	{
+        	toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], true);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+    	}
+	else if (QNum == 3)
+	{
+		
+	
+}
+
+function toggleQuestion(elements, show) {
+    elements.forEach(id => {
+        if (show) {
+            $w(id).expand();
+        } else {
+            $w(id).collapse();
+        }
+    });
+}
+});
 
 
