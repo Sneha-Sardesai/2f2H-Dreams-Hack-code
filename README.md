@@ -1284,3 +1284,29 @@ function toggleQuestion(elements, show) {
 }
 });
 
+#python code
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from pyngrok import ngrok
+
+app = Flask(_name_)
+CORS(app)
+
+@app.route('/main_code', methods = ['POST'])
+def main_code() :
+	data = request.get('answers')
+	student_answers = data.get('answers')
+	
+    
+public_url = ngrok.connect(5000)
+print(f"Public URL : {public_url}")
+
+# Run the Flask app
+app.run(port=5000)
+X=['B','B,'C','B','C','D','A','A','C']
+for i in X:
+   if(X[i]==student_answers[i]):
+    print("correct")
+  else:
+   print("incorrect,the corect answer is",i)
+
