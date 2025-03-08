@@ -927,3 +927,360 @@ function toggleQuestion(elements, show) {
 }
 });
 
+# Wix final final
+
+let currentBoxIndex = 0;
+const boxes = [
+	"#LPQ1", "#LPQ2", "LPQ3", "LPQ4", "LPQ5", 
+	"#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5",
+	"#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"];
+
+$w.onReady(function () {
+    // Hide all boxes except the first one
+    boxes.forEach((id, index) => {
+        if (index !== 0) $w(id).collapse();
+    });
+
+    // Button click function to move to the next question
+    $w("#LNext").onClick(() => {
+        if (currentBoxIndex < boxes.length - 1) {
+            $w(boxes[currentBoxIndex]).collapse(); // Hide current box
+            currentBoxIndex++;
+            $w(boxes[currentBoxIndex]).expand(); // Show next box
+        }
+    });
+
+	$w("#LPrevious").onClick(() => {
+        if (currentBoxIndex < boxes.length - 1) {
+            $w(boxes[currentBoxIndex]).collapse(); // Hide current box
+            currentBoxIndex--;
+            $w(boxes[currentBoxIndex]).expand(); // Show next box
+        }
+    });
+});
+
+-----------------------------------------------------------------------
+
+let currentBoxIndex = 0; const boxes = [ 
+	"#LPQ1", "#LPQ2", "LPQ3", "LPQ4", "LPQ5", 
+	"#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5", 
+	"#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"];
+
+let studentAnswers = [];
+
+function collectAnswers() {
+    const currentPage = $w(boxes[currentPageIndex]);
+
+const answer = currentPage.querySelector('input[type="radio"]:checked')?.value || 
+// So we're storing the answer
+userAnswers[currentPageIndex] = answer;
+
+$w.onReady(function () 
+{ 
+	// Hide all pages except the first one ]
+	pages.forEach((id, index) => 
+	{ 
+		if (index !== 0) $w(id).collapse(); });
+		// to move to the next question
+		$w("#LNext").onClick(() => 
+		{
+			collectAnswers(); 
+		if (currentPageIndex < pages.length - 1) 
+		{
+        	$w(boxes[currentPageIndex]).hide(); // Hide current page
+        	currentPageIndex++;
+        	$w(boxes[currentPageIndex]).show(); // Show next page
+    		}
+	});
+
+	$w("#LPrevious").onClick(() => 
+	{
+		collectAnswers(); 
+		if (currentPageIndex < pages.length - 1) {
+        $w(boxes[currentPageIndex]).hide(); // Hide current page uk
+        currentPageIndex--;
+        $w(boxes[currentPageIndex]).show(); // Show next page (or next question)
+    }
+});
+
+
+function sendAnswersToBackend() {
+    fetch("https://0f59-34-80-29-194.ngrok-free.app/main_code", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            answers: userAnswers 
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+-------------------------------------------------------------------------------------------------------------
+
+// Next Button Click - Show Question 2, Hide Question 1
+$w("#LNext").onClick(() => {
+    showQuestion(2);
+});
+
+// Previous Button Click - Show Question 1, Hide Question 2
+$w("#LPrevious").onClick(() => {
+    showQuestion(1);
+});
+
+function showQuestion(questionNumber) {
+    if (questionNumber === 1) {
+        toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], true);
+        toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+    } else if (questionNumber === 2) {
+        toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], true);
+    }
+}
+
+function toggleQuestion(elements, show) {
+    elements.forEach(id => {
+        if (show) {
+            $w(id).expand();
+        } else {
+            $w(id).collapse();
+        }
+    });
+}
+});
+------------------------------------------------------------------------------------------------------------
+
+let currentBoxIndex = 0; const boxes = [ 
+	"#LPQ1", "#LPQ2", "LPQ3", "LPQ4", "LPQ5", 
+	"#LCQ1", "#LCQ2", "#LCQ3", "#LCQ4", "#LCQ5", 
+	"#LMQ1", "#LMQ2", "#LMQ3", "#LMQ4", "#LMQ5"];
+
+let studentAnswers = [];
+
+function collectAnswers() {
+    const currentPage = $w(boxes[currentPageIndex]);
+
+const answer = currentPage.querySelector('input[type="radio"]:checked')?.value || 
+// So we're storing the answer
+userAnswers[currentPageIndex] = answer;
+
+// Next Button Click - Show Question 2, Hide Question 1
+$w("#LNext").onClick(() => {
+    showQuestion(2);
+});
+
+// Previous Button Click - Show Question 1, Hide Question 2
+$w("#LPrevious").onClick(() => {
+    showQuestion(1);
+});
+
+function showQuestion(questionNumber) {
+    if (questionNumber === 1) {
+        toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], true);
+        toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+    } else if (questionNumber === 2) {
+        toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], true);
+    }
+}
+
+function toggleQuestion(elements, show) {
+    elements.forEach(id => {
+        if (show) {
+            $w(id).expand();
+        } else {
+            $w(id).collapse();
+        }
+    });
+}
+});
+
+
+function sendAnswersToBackend() {
+    fetch("https://cdc1-34-16-23-116.ngrok-free.app/main_code", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            answers: userAnswers 
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
+------------------------------------------------------------------------------------------------------
+
+let Questions = ["#LPQ1", "#LPQ2", "#LPQ3", "#LCQ1", "#LCQ2", "#LCQ3", "#LMQ1", "#LMQ2", "#LMQ3"];
+
+// Next Button Click 
+$w("#LNext").onClick(() => 
+{
+	for (let CurrentQ in Questions) 
+	{
+		if (CurrentQ == 8) 
+		{
+			showQuestion(0);
+		}
+		else
+		{
+			showQuestion(CurrentQ+1);
+		}
+	}
+
+});
+
+// Previous Button Click - Show Question 1, Hide Question 2
+$w("#LPrevious").onClick(() => 
+{
+	for (let CurrentQ in Questions) 
+	{
+		if (CurrentQ == 0)
+		{
+			showQuestion(8);
+		}
+		else
+		{
+			showQuestion(CurrentQ-1);
+		}
+	}
+});
+
+function showQuestion(QNum) 
+{
+   	if (QNum === 0)
+	{
+        	toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], true);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+		toggleeQuestion(["#CQ1", "#CQ1Option1","#CQ1Option2","#CQ1Option3", "#CQ1Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+
+	} 
+	else if (QNum === 1)
+	{
+        	toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], true);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+		toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+    	}
+	else if (QNum == 2)
+	{
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], true);
+		toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+	}
+	else if (QNum  == 3)
+	{
+		toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], true);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+	}
+	else if (QNum == 4)
+	{
+		toggleQuestion(["#CQ1", "#CQ1Option1", "#CQ1Option2", "#CQ1Option3", "#CQ1Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], true);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+
+	}
+	else if (QNum == 5)
+	{
+		toggleQuestion(["#CQ1", "#CQ1Option1", "#CQ1Option2", "#CQ1Option3", "#CQ1Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], true);
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+	}
+	else if (QNum == 6)
+	{
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], true);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+		toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+	}
+	else if (QNum == 7)
+	{
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], true);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], false);
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+		toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+
+	}
+	else if (QNum == 8)
+	{
+		toggleQuestion(["#MQ1", "#MQ1Option1", "#MQ1Option2", "#MQ1Option3", "#M1Option4"], false);
+		toggleQuestion(["#MQ2", "#MQ2Option1","#MQ2Option2", "#MQ2Option3", "#MQ2Option4"], false);
+		toggleQuestion(["#MQ3", "#MQ3Option1", "#MQ3Option2", "#MQ3Option3", "#MQ3Option4"], true);
+		toggleQuestion(["#PQ1", "#PQ1Option1", "#PQ1Option2", "#PQ1Option3", "#PQ1Option4"], false);
+        	toggleQuestion(["#PQ2", "#PQ2Option1", "#PQ2Option2", "#PQ2Option3", "#PQ2Option4"], false);
+		toggleQuestion(["#PQ3", "#PQ3Option1", "#PQ3Option2", "#PQ3Option3", "#PQ3Option4"], false);
+		toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+        	toggleQuestion(["#CQ2", "#CQ2Option1", "#CQ2Option2", "#CQ2Option3", "#CQ2Option4"], false);
+		toggleQuestion(["#CQ3", "#CQ3Option1", "#CQ3Option2", "#CQ3Option3", "#CQ3Option4"], false);
+	}
+}
+
+function toggleQuestion(elements, show) {
+    elements.forEach(id => {
+        if (show) {
+            $w(id).expand();
+        } else {
+            $w(id).collapse();
+        }
+    });
+}
+});
+
